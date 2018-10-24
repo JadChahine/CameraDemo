@@ -1,3 +1,22 @@
-<p>
-  list works!
-</p>
+<ngx-datatable class='material' [rows]='rows' [columnMode]='"force"' [headerHeight]='50' [footerHeight]='50' [rowHeight]='50'>
+    <ngx-datatable-column name="Name">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        {{row['name']}}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Owner">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          {{row['owner']}}
+        </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Edit">
+        <button md-raised-button color="info">Edit</button>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Delete">
+      <button md-raised-button color="warn">Delete</button>
+    </ngx-datatable-column>
+
+  </ngx-datatable>

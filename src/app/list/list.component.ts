@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ListService } from '../services/list.service';
 
 @Component({
   selector: 'app-list',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
 
-  constructor() { }
+  rows = [];
+
+  constructor(private listService: ListService) {
+
+   }
 
   ngOnInit() {
+    this.rows = this.listService.getCameras();
   }
 
 }

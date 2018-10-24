@@ -8,6 +8,7 @@ import { EditComponent } from './edit/edit.component';
 
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    NgxDatatableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
