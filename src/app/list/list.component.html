@@ -12,11 +12,11 @@
     </ngx-datatable-column>
 
     <ngx-datatable-column name="Edit">
-        <button md-raised-button color="info">Edit</button>
-    </ngx-datatable-column>
-
-    <ngx-datatable-column name="Delete">
-      <button md-raised-button color="warn">Delete</button>
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <a href="javascript:void(0)" (click)="call(row)">
+              <i class="material-icons">Edit</i>
+            </a>
+        </ng-template>
     </ngx-datatable-column>
 
   </ngx-datatable>

@@ -1,3 +1,32 @@
-<p>
-  filter works!
-</p>
+<div class="container">
+    <form [formGroup]="filterForm">
+        <p>
+          <input formControlName="searchText"
+                placeholder="Search Field"
+                [ngStyle]="{'display':'block', 'width': '300px'}">
+        </p>
+  
+        <p>
+            <ng-select class="custom" [items]="CameraTypes"
+                      formControlName="cameraType"
+                      placeholder="Select Camera Type"
+                      [ngStyle]="{'display':'block', 'width': '300px'}"
+                      [(ngModel)]="selectedCameraType">
+            </ng-select>
+        </p>
+  
+        <p>
+            <input formControlName="cameraPrice"
+            placeholder="Price"
+            [ngStyle]="{'display':'block', 'width': '300px'}">
+        </p>
+
+        <!-- <mat-checkbox name="cameraIsFree">Free</mat-checkbox> [(ngModel)]="user.remember"--> 
+  
+        <p>
+          <input formControlName="cameraOwner"
+                placeholder="Owner"
+                [ngStyle]="{'display':'block', 'width': '300px'}">
+        </p>
+    </form>
+  </div>

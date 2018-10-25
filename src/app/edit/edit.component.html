@@ -1,3 +1,38 @@
-<p>
-  edit works!
-</p>
+<div class="container">
+  <form [formGroup]="editForm">
+      <p>
+        <input formControlName="name"
+              placeholder="Enter Name"
+              [ngStyle]="{'display':'block', 'width': '300px'}">
+      </p>
+
+      <p>
+        <textarea rows="5"
+                  formControlName="description"
+                  placeholder="Enter Description"
+                  [ngStyle]="{'display':'block', 'width': '300px'}">
+        </textarea>
+      </p>
+
+      <p>
+          <ng-select class="custom" [items]="CameraTypes"
+                    formControlName="cameraType"
+                    placeholder="Select Camera Type"
+                    [ngStyle]="{'display':'block', 'width': '300px'}"
+                    [(ngModel)]="selectedCameraType">
+          </ng-select>
+      </p>
+
+      <p>
+        <input formControlName="price"
+              placeholder="Price"
+              [ngStyle]="{'display':'block', 'width': '300px'}">
+      </p>
+
+      <p>
+        <input formControlName="owner"
+              placeholder="Owner"
+              [ngStyle]="{'display':'block', 'width': '300px'}">
+      </p>
+  </form>
+</div>
