@@ -1,38 +1,32 @@
-<div class="container">
-  <form [formGroup]="editForm">
-      <p>
-        <input formControlName="name"
-              placeholder="Enter Name"
-              [ngStyle]="{'display':'block', 'width': '300px'}">
-      </p>
+<fieldset>
+    <legend>Save Camera</legend>
+    <div class="container">
+        <form [formGroup]="editForm" class="edit-form">
+            <mat-form-field class="edit-full-width">
+                <input matInput formControlName="name" placeholder="Camera Name">
+            </mat-form-field>
+            
+            <mat-form-field class="edit-full-width">
+                <textarea matInput formControlName="description" placeholder="Description"></textarea>
+            </mat-form-field>
 
-      <p>
-        <textarea rows="5"
-                  formControlName="description"
-                  placeholder="Enter Description"
-                  [ngStyle]="{'display':'block', 'width': '300px'}">
-        </textarea>
-      </p>
+            <mat-form-field>
+                <mat-select placeholder="Select Camera Type" formControlName="cameraType">
+                    <mat-option *ngFor="let type of cameraTypes" [value]="type" class="filter-full-width">
+                    {{type}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
 
-      <p>
-          <ng-select class="custom" [items]="CameraTypes"
-                    formControlName="cameraType"
-                    placeholder="Select Camera Type"
-                    [ngStyle]="{'display':'block', 'width': '300px'}"
-                    [(ngModel)]="selectedCameraType">
-          </ng-select>
-      </p>
+            <mat-form-field class="edit-full-width">
+                <input matInput formControlName="cameraPrice" type="number" placeholder="Price">
+            </mat-form-field>
 
-      <p>
-        <input formControlName="price"
-              placeholder="Price"
-              [ngStyle]="{'display':'block', 'width': '300px'}">
-      </p>
+            <mat-form-field class="edit-full-width">
+                <input matInput formControlName="cameraOwner" placeholder="Owner">
+            </mat-form-field>
 
-      <p>
-        <input formControlName="owner"
-              placeholder="Owner"
-              [ngStyle]="{'display':'block', 'width': '300px'}">
-      </p>
-  </form>
-</div>
+            <button mat-raised-button color="primary">Save</button>
+        </form>
+    </div>
+</fieldset>

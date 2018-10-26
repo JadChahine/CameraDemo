@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { CameraService } from '../services/camera.service';
 
 @Component({
   selector: 'app-edit',
@@ -12,23 +12,21 @@ export class EditComponent implements OnInit {
   editForm: FormGroup;
   name: FormControl;
   description: FormControl;
-  price: FormControl;
-  owner: FormControl;
+  cameraPrice: FormControl;
+  cameraOwner: FormControl;
   cameraType: FormControl;
 
-  //cameraTypes: String[];
   selectedCameraType: String;
 
   constructor(private fb: FormBuilder,
-             @Inject('CameraTypes') private CameraTypes) {
+             @Inject('CameraTypes') private cameraTypes,
+             private cameraService: CameraService) {
     
     this.name = new FormControl();
     this.description = new FormControl();
-    this.price = new FormControl();
-    this.owner = new FormControl();
+    this.cameraPrice = new FormControl();
+    this.cameraOwner = new FormControl();
     this.cameraType = new FormControl();
-
-    //this.cameraTypes = CAMERA_TYPES;
 
     this.createForm();
   }
@@ -38,13 +36,12 @@ export class EditComponent implements OnInit {
       name: ['', [ Validators.required ] ],
       description: ['',  ],
       cameraType: [ '', [ Validators.required ] ],
-      price: [ 0, [ Validators.required ]],
-      owner: [ '', [ Validators.required ]]
+      cameraPrice: [ , [ Validators.required ]],
+      cameraOwner: [ '', [ Validators.required ]]
     });
   }
 
   ngOnInit() {
-
   }
 
 }

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ListService } from '../services/list.service';
+import { Observable } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Camera } from '../shared/camera';
+import { CameraService } from '../services/camera.service';
 
 @Component({
   selector: 'app-list',
@@ -7,15 +11,32 @@ import { ListService } from '../services/list.service';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
+  cameraEntries = [];
 
-  rows = [];
+  cameras: Observable<Camera[]>;
 
-  constructor(private listService: ListService) {
+  constructor(private listService: ListService,
+             private db: AngularFirestore,
+             private cameraService: CameraService) {
+       this.cameras = db.collection('cameras').valueChanges() as Observable<Camera[]>;
 
+       setTimeout(()=>{   
+          this.cameras.subscribe(items => this.cameraEntries = items);
+      }, 3000); 
+
+
+      this.cameraService.searchCameras$.subscribe(
+        data =>  this.cameraEntries = data,
+        error => console.log('error', error),
+        () => console.log('completed')
+      );
+    
+      
    }
 
+
   ngOnInit() {
-    this.rows = this.listService.getCameras();
+  
   }
 
 }

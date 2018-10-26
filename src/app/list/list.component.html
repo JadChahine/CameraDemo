@@ -1,22 +1,39 @@
-<ngx-datatable class='material' [rows]='rows' [columnMode]='"force"' [headerHeight]='50' [footerHeight]='50' [rowHeight]='50'>
-    <ngx-datatable-column name="Name">
-      <ng-template ngx-datatable-cell-template let-row="row">
-        {{row['name']}}
-      </ng-template>
-    </ngx-datatable-column>
+<div class="container" style="position: relative;">
+  <div class="absoluteClass">
+      <ngx-datatable class='material' [rows]='cameraEntries' [columnMode]='"force"' [headerHeight]='50' [footerHeight]='50' [rowHeight]='50'>
+          <ngx-datatable-column name="Name">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              {{row['Name']}}
+            </ng-template>
+          </ngx-datatable-column>
+      
+          <ngx-datatable-column name="Owner">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              {{row['Owner']}}
+            </ng-template>
+          </ngx-datatable-column>
+      
+          <ngx-datatable-column name="Edit">
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <a href="javascript:void(0)" (click)="call(row)">
+                <i class="material-icons">Edit</i>
+              </a>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+  </div>
 
-    <ngx-datatable-column name="Owner">
-        <ng-template ngx-datatable-cell-template let-row="row">
-          {{row['owner']}}
-        </ng-template>
-    </ngx-datatable-column>
+  <div [hidden]="cameraEntries" class="absoluteClass centerClass">
+      <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+  </div>
+</div>
 
-    <ngx-datatable-column name="Edit">
-        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-            <a href="javascript:void(0)" (click)="call(row)">
-              <i class="material-icons">Edit</i>
-            </a>
-        </ng-template>
-    </ngx-datatable-column>
 
-  </ngx-datatable>
+
+<!--
+<ul>
+  <li *ngFor="let camera of cameras | async">
+    {{ camera.Name }}
+  </li>
+</ul>
+-->
