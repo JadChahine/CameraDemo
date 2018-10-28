@@ -18,25 +18,29 @@ export class ListComponent implements OnInit {
   constructor(private listService: ListService,
              private db: AngularFirestore,
              private cameraService: CameraService) {
-       this.cameras = db.collection('cameras').valueChanges() as Observable<Camera[]>;
+      this.cameras = db.collection('cameras').valueChanges() as Observable<Camera[]>;
 
-       setTimeout(()=>{   
-          this.cameras.subscribe(items => this.cameraEntries = items);
+      setTimeout( ()=>{   
+        this.cameras.subscribe(items =>
+          this.cameraEntries = items
+        );
       }, 3000); 
-
-
-      this.cameraService.searchCameras$.subscribe(
-        data =>  this.cameraEntries = data,
-        error => console.log('error', error),
-        () => console.log('completed')
-      );
-    
-      
    }
 
-
   ngOnInit() {
-  
+    this.cameraService.getCameras().subscribe(
+      data =>  {
+        console.log('Getting data');
+        this.cameraEntries = data;
+        console.log('Data retrieved ' + this.cameraEntries);
+      },
+      error => {
+        console.log('error', error)
+      },
+      () => {
+        console.log('completed')
+      }
+    );
   }
 
 }

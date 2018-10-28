@@ -37,9 +37,9 @@ export class FilterComponent implements OnInit {
   createForm(){
     this.filterForm = this.fb.group({
       searchText: ['', [ Validators.required ] ],
-      cameraOwner: ['', [Validators.required] ],
-      cameraPrice: [, [ Validators.required] ],
-      cameraType: [ '', [ Validators.required ] ]
+      cameraOwner: ['', [ ] ],
+      cameraPrice: [, [  ] ],
+      cameraType: [ '', [  ] ]
     })
   }
 

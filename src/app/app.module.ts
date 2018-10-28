@@ -25,6 +25,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { environment } from 'src/environments/environment';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { CamerasComponent } from './cameras/cameras.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { AngularFirestore } from '@angular/fire/firestore';
     FilterComponent,
     ListComponent,
     EditComponent,
-    HeaderComponent
+    HeaderComponent,
+    CamerasComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

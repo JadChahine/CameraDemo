@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Camera } from '../shared/camera';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, of, Subject  } from 'rxjs';
@@ -7,31 +7,40 @@ import { Observable, of, Subject  } from 'rxjs';
   providedIn: 'root'
 })
 export class CameraService {
-
-  searchCameras$: Observable<any>;
-  private camerasToDisplay =  new Subject<any>();
-
-  constructor(private db: AngularFirestore) {
-    this.searchCameras$ = this.camerasToDisplay.asObservable();
-  }
-
+  @Output() fire: EventEmitter<any> = new EventEmitter();
+  
   cameras: Observable<Camera[]>;
   camerasArray: Camera[];
 
-  searchCameras(cameraNameToSearch){
-    console.log('Text to search :' + cameraNameToSearch); 
+  cameraEntries = [];
+
+  constructor(private db: AngularFirestore) {
+    
+  }
+
+  searchCameras(cameraNameToSearch): any{
+    console.log('Text to search: ' + cameraNameToSearch);
 
     this.cameras = this.db.collection('cameras').valueChanges() as Observable<Camera[]>;
 
-    this.cameras.subscribe(items => this.camerasArray = items,  error => console.log('error',error),);
+    this.cameras.subscribe(cameraEntries =>
+      this.cameraEntries = cameraEntries
+    );
 
-    if(this.camerasArray != null){
-      this.camerasArray.forEach(camera => {
-        if(camera.name == cameraNameToSearch){
-          this.camerasToDisplay.next(camera);
-        }
-      });
-    }
+    let camerasToDisplay: any = []
+
+    this.cameraEntries.forEach(camera => {
+      console.log('Camera name: ' + camera.name);
+      if(camera.name == cameraNameToSearch){
+        camerasToDisplay.push(camera);
+      }
+    });
+   
+    this.fire.emit(camerasToDisplay);
+  }
+
+  getCameras(){
+    return this.fire;
   }
 
 }
