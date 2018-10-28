@@ -24,23 +24,23 @@ export class ListComponent implements OnInit {
         this.cameras.subscribe(items =>
           this.cameraEntries = items
         );
-      }, 3000); 
+      }, 2000); 
    }
 
   ngOnInit() {
-    this.cameraService.getCameras().subscribe(
-      data =>  {
-        console.log('Getting data');
-        this.cameraEntries = data;
-        console.log('Data retrieved ' + this.cameraEntries);
-      },
-      error => {
-        console.log('error', error)
-      },
-      () => {
-        console.log('completed')
-      }
-    );
+     this.cameraService.getSearchResults()
+      .subscribe(
+          searchResultList => {
+            console.log('Search result list: ' + searchResultList);
+            this.cameraEntries = searchResultList;
+          },
+          error => {
+            console.log('Failed to search for cameras due to ', error)
+          },
+          () => {
+            console.log('Cameras searched successfully')
+          }
+      );
   }
 
 }

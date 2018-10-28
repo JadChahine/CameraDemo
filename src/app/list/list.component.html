@@ -1,5 +1,7 @@
 <div class="container" style="position: relative;">
   <div class="absoluteClass">
+      <button mat-raised-button color="primary" style="left: 78%;margin-bottom: 10px;;">New Camera</button>
+
       <ngx-datatable class='material' [rows]='cameraEntries' [columnMode]='"force"' [headerHeight]='50' [footerHeight]='50' [rowHeight]='50'>
           <ngx-datatable-column name="Name">
             <ng-template ngx-datatable-cell-template let-row="row">
@@ -23,11 +25,10 @@
         </ngx-datatable>
   </div>
 
-  <div [hidden]="cameraEntries" class="absoluteClass centerClass">
+  <div [hidden]="cameras" class="absoluteClass centerClass">
       <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
   </div>
 </div>
-
 
 
 <!--

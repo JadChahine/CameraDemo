@@ -46,7 +46,7 @@ export class FilterComponent implements OnInit {
   ngOnInit() {
   }
 
-  searchCameras(){
+  public searchCameras(){
     let searchText: String = this.filterForm.get('searchText').value;
     console.log(searchText);
 

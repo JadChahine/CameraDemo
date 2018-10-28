@@ -1,46 +1,34 @@
-import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Camera } from '../shared/camera';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, of, Subject  } from 'rxjs';
+import { BehaviorSubject  } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CameraService {
-  @Output() fire: EventEmitter<any> = new EventEmitter();
-  
-  cameras: Observable<Camera[]>;
-  camerasArray: Camera[];
-
-  cameraEntries = [];
+  private searchResults = new BehaviorSubject([]);
 
   constructor(private db: AngularFirestore) {
-    
   }
+  
+  public searchCameras(searchText) {
+    this.db.collection('cameras').valueChanges()
+    .subscribe(
+        response => {
+          let res = response as Camera[];
+          
+          res = res.filter(function(camera) {
+            return camera['Name'].includes(searchText);
+          });
 
-  searchCameras(cameraNameToSearch): any{
-    console.log('Text to search: ' + cameraNameToSearch);
-
-    this.cameras = this.db.collection('cameras').valueChanges() as Observable<Camera[]>;
-
-    this.cameras.subscribe(cameraEntries =>
-      this.cameraEntries = cameraEntries
+          this.searchResults.next(res)
+        }
     );
-
-    let camerasToDisplay: any = []
-
-    this.cameraEntries.forEach(camera => {
-      console.log('Camera name: ' + camera.name);
-      if(camera.name == cameraNameToSearch){
-        camerasToDisplay.push(camera);
-      }
-    });
-   
-    this.fire.emit(camerasToDisplay);
   }
 
-  getCameras(){
-    return this.fire;
+  public getSearchResults(){
+    return this.searchResults.asObservable();
   }
 
 }
