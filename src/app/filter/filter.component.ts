@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Camera } from '../shared/camera';
 import { CameraService } from '../services/camera.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-filter',
@@ -20,16 +21,18 @@ export class FilterComponent implements OnInit {
 
   cameras: Observable<Camera[]>;
   camerasArray: Camera[];
-  
-  constructor(private fb: FormBuilder,
-              @Inject('CameraTypes') private cameraTypes,
-              @Inject('OwnerTypes') private ownerTypes,
-              private db: AngularFirestore,
-              private cameraService: CameraService) {
+
+  ownerTypes: String[];
+  cameraTypes: String[];
+   
+  constructor(private fb: FormBuilder, private db: AngularFirestore, private cameraService: CameraService, private userService: UserService) {  //@Inject('CameraTypes') private cameraTypes,
       this.searchText = new FormControl();
       this.cameraPrice = new FormControl();
       this.cameraOwner = new FormControl();
       this.cameraType = new FormControl();
+
+      this.cameraTypes = this.cameraService.getCameraTypes();
+      this.ownerTypes = this.userService.getUserRole();
 
       this.createForm();
   }
@@ -47,10 +50,12 @@ export class FilterComponent implements OnInit {
   }
 
   public searchCameras(){
-    let searchText: String = this.filterForm.get('searchText').value;
-    console.log(searchText);
+    if(this.filterForm.valid){
+      let searchText: String = this.filterForm.get('searchText').value;
+      console.log(searchText);
 
-    this.cameraService.searchCameras(searchText);
+      this.cameraService.searchCameras(searchText);
+    }
   }
 
 }

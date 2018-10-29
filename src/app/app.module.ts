@@ -12,11 +12,9 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { CAMERA_TYPES } from './shared/cameraTypes';
 import { MatFormFieldModule, MatInputModule, MatAutocompleteModule, MatIconModule} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSelectModule } from '@angular/material/select';
-import { USER_TYPES } from './shared/owners';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
@@ -60,8 +58,7 @@ import { HomeComponent } from './home/home.component';
     AngularFireModule.initializeApp(environment.firebase, 'CameraDemo'),
   ],
   providers: [
-    {provide: 'CameraTypes', useValue: CAMERA_TYPES},
-    {provide: 'OwnerTypes', useValue: USER_TYPES},
+    //{provide: 'CameraTypes', useValue: CAMERA_TYPES},
     AngularFirestore
   ],
   bootstrap: [AppComponent]

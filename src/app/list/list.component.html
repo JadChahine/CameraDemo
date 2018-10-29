@@ -1,35 +1,93 @@
 <div class="container" style="position: relative;">
+
   <div class="absoluteClass">
-      <button mat-raised-button color="primary" style="left: 78%;margin-bottom: 10px;;">New Camera</button>
+      <button mat-raised-button color="primary" style="left: 84%;margin-bottom: 10px;" (click)="createNewCamera()">New Camera</button>
 
       <ngx-datatable class='material' [rows]='cameraEntries' [columnMode]='"force"' [headerHeight]='50' [footerHeight]='50' [rowHeight]='50'>
-          <ngx-datatable-column name="Name">
-            <ng-template ngx-datatable-cell-template let-row="row">
-              {{row['Name']}}
+          <ngx-datatable-column prop="name" name="Name" [resizeable]="true" [sortable]="true" [draggable]="false">
+            <ng-template ngx-datatable-cell-template let-row="row" let-column="name">
+              {{row['Name']}} 
             </ng-template>
           </ngx-datatable-column>
       
-          <ngx-datatable-column name="Owner">
+          <ngx-datatable-column prop="owner" name="Owner" [resizeable]="true" [sortable]="true" [draggable]="false">
             <ng-template ngx-datatable-cell-template let-row="row">
               {{row['Owner']}}
             </ng-template>
           </ngx-datatable-column>
       
-          <ngx-datatable-column name="Edit">
+          <ngx-datatable-column name="Edit" [resizeable]="false" [sortable]="false" [draggable]="false">
             <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-              <a href="javascript:void(0)" (click)="call(row)">
+              <a href="javascript:void(0)" (click)="editCamera(row)">
                 <i class="material-icons">Edit</i>
               </a>
             </ng-template>
           </ngx-datatable-column>
+
+          <ngx-datatable-column name="Delete" [resizeable]="false" [sortable]="false" [draggable]="false">
+              <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                <a href="javascript:void(0)" (click)="deleteCamera(row)">
+                  <i class="material-icons">Delete</i>
+                </a>
+              </ng-template>
+            </ngx-datatable-column>
+          
         </ngx-datatable>
   </div>
-
-  <div [hidden]="cameras" class="absoluteClass centerClass">
+  
+ <div [hidden]="cameras" class="absoluteClass centerClass">
       <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
   </div>
 </div>
 
+<!--
+  <div>
+      <ngx-datatable
+        #myTable
+        class="material"
+        [rows]="rows"
+        [columns]="[{name:'name'},{name:'type'},{name:'owner'}]"
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [loadingIndicator]="isLoading"
+        [scrollbarV]="true"
+        [footerHeight]="50"
+        [rowHeight]="50"
+        [externalPaging]="true"
+        [count]="page.totalElements"
+        [offset]="page.pageNumber"
+        (page)='setPage($event)'>
+            <ngx-datatable-footer>
+              <ng-template 
+                ngx-datatable-footer-template
+                let-rowCount="rowCount"
+                let-pageSize="pageSize"
+                let-selectedCount="selectedCount"
+                let-curPage="curPage"
+                let-offset="offset"
+                let-isVisible="isVisible">
+                  <div class="page-count">
+                    <span *ngIf="selectedMessage">
+                      {{selectedCount.toLocaleString()}} {{selectedMessage}} / 
+                    </span>
+                    {{rowCount.toLocaleString()}} {{totalMessage}}
+                  </div>
+                  <datatable-pager
+                      [pagerLeftArrowIcon]="'datatable-icon-left'"
+                      [pagerRightArrowIcon]="'datatable-icon-right'"
+                      [pagerPreviousIcon]="'datatable-icon-prev'"
+                      [pagerNextIcon]="'datatable-icon-skip'"
+                      [page]="curPage"
+                      [size]="pageSize"
+                      [count]="rowCount"
+                      [hidden]="!((rowCount / pageSize) > 1)"
+                      (change)="table.onFooterPage($event)">
+                  </datatable-pager>
+              </ng-template>
+            </ngx-datatable-footer>
+      </ngx-datatable>
+    </div>
+-->
 
 <!--
 <ul>

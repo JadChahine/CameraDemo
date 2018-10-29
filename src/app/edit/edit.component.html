@@ -1,13 +1,15 @@
 <fieldset>
     <legend>Save Camera</legend>
     <div class="container">
-        <form [formGroup]="editForm" class="edit-form">
+        <form [formGroup]="saveCameraForm" class="edit-form" #fform="ngForm">
+            <input matInput formControlName="cameraId" hidden>
+
             <mat-form-field class="edit-full-width">
-                <input matInput formControlName="name" placeholder="Camera Name">
+                <input matInput formControlName="cameraName" placeholder="Camera Name">
             </mat-form-field>
             
             <mat-form-field class="edit-full-width">
-                <textarea matInput formControlName="description" placeholder="Description"></textarea>
+                <textarea matInput formControlName="cameraDescription" placeholder="Description"></textarea>
             </mat-form-field>
 
             <mat-form-field>
@@ -26,7 +28,7 @@
                 <input matInput formControlName="cameraOwner" placeholder="Owner">
             </mat-form-field>
 
-            <button mat-raised-button color="primary">Save</button>
+            <button type="submit" mat-raised-button color="primary" (click)="saveCamera()">Save</button>
         </form>
     </div>
 </fieldset>
