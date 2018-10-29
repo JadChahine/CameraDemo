@@ -3,7 +3,7 @@
     <div class="container">
         <form [formGroup]="filterForm" class="filter-form">
             <mat-form-field class="filter-full-width">
-                <input matInput formControlName="searchText" placeholder="Search Field">
+                <input matInput formControlName="searchText" placeholder="Search Field" (input)="onSearchChange($event.target.value)">
             </mat-form-field>
     
             <mat-form-field>

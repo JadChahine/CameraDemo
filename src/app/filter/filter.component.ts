@@ -46,6 +46,10 @@ export class FilterComponent implements OnInit {
     })
   }
 
+  onSearchChange(searchText) {
+     this.cameraService.searchCameras(searchText);
+  }
+
   ngOnInit() {
   }
 

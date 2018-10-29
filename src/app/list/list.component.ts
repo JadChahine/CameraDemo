@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Camera } from '../shared/camera';
 import { CameraService } from '../services/camera.service';
 import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-list',
@@ -12,11 +12,12 @@ import { Observable } from 'rxjs';
 })
 
 export class ListComponent implements OnInit {
-
   cameraEntries = [];
 
   camerasCollection: AngularFirestoreCollection<Camera>;
   cameras: Observable<Camera[]>;
+
+  subscription: Subscription;
 
   constructor(private db: AngularFirestore, private cameraService: CameraService) {
       this.camerasCollection = this.db.collection('cameras');
@@ -35,19 +36,23 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {
     //listening to the filter component to display the results once the search is executed
-     this.cameraService.getSearchResults()
-      .subscribe(
-          searchResultList => {
-            console.log('Search result list: ' + JSON.stringify(searchResultList));
-            this.cameraEntries = searchResultList;
-          },
-          error => {
-            console.log('Failed to search for cameras due to ', error)
-          },
-          () => {
-            console.log('Cameras searched successfully')
-          }
-      );
+    this.subscription = this.cameraService.getSearchResults()
+                    .subscribe(
+                        searchResultList => {
+                          console.log('Search result list: ' + JSON.stringify(searchResultList));
+                          this.cameraEntries = searchResultList;
+                        },
+                        error => {
+                          console.log('Failed to search for cameras due to ', error)
+                        },
+                        () => {
+                          console.log('Cameras searched successfully')
+                        }
+                    );
+  }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
   }
 
   createNewCamera(){

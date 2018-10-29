@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { CameraService } from '../services/camera.service';
 import { Camera } from '../shared/camera';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-edit',
@@ -21,6 +22,8 @@ export class EditComponent implements OnInit {
   cameraType: FormControl;
 
   cameraTypes: String[];
+
+  subscription: Subscription;
 
   constructor(private fb: FormBuilder,  private cameraService: CameraService) {
     this.cameraId = new FormControl();
@@ -48,21 +51,21 @@ export class EditComponent implements OnInit {
 
   ngOnInit() {
     //listening to the list component to display the camera information once the edit is executed
-    this.cameraService.getCameraEditInformation()
-    .subscribe(
-        cameraInformation => {
-          this.saveCameraForm.patchValue({cameraId: cameraInformation['id']});
-          this.saveCameraForm.patchValue({cameraName: cameraInformation['Name']});
-          this.saveCameraForm.patchValue({cameraDescription: cameraInformation['Description']});
-          this.saveCameraForm.patchValue({cameraType: cameraInformation['Type']});
-          this.saveCameraForm.patchValue({cameraPrice: cameraInformation['Price']});
-          this.saveCameraForm.patchValue({cameraOwner: cameraInformation['Owner']});
-        },
-        error => {
-          console.log('Failed to get camera information due to ', error)
-        },
-        () => { }
-    );
+    this.subscription = this.cameraService.getCameraEditInformation()
+                        .subscribe(
+                            cameraInformation => {
+                              this.saveCameraForm.patchValue({cameraId: cameraInformation['id']});
+                              this.saveCameraForm.patchValue({cameraName: cameraInformation['Name']});
+                              this.saveCameraForm.patchValue({cameraDescription: cameraInformation['Description']});
+                              this.saveCameraForm.patchValue({cameraType: cameraInformation['Type']});
+                              this.saveCameraForm.patchValue({cameraPrice: cameraInformation['Price']});
+                              this.saveCameraForm.patchValue({cameraOwner: cameraInformation['Owner']});
+                            },
+                            error => {
+                              console.log('Failed to get camera information due to ', error)
+                            },
+                            () => { }
+                        );
 
     this.cameraService.getNewCameraEvent()
     .subscribe(
@@ -81,6 +84,11 @@ export class EditComponent implements OnInit {
         },
     );
   }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+  }
+
    /**
    * 
    * @param camera 
@@ -95,7 +103,7 @@ export class EditComponent implements OnInit {
     );
 
     if(this.saveCameraForm.valid){
-      if(this.saveCameraForm.get('cameraId').value != ''){
+      if(this.saveCameraForm.get('cameraId').value != null && this.saveCameraForm.get('cameraId').value != ''){
         camera.id = this.saveCameraForm.get('cameraId').value;
 
         console.log('Read to update camera of Id ' + camera.id);
@@ -109,11 +117,13 @@ export class EditComponent implements OnInit {
       }
      
       this.saveCameraFormDirective.resetForm();
-      this.resetForm();
+      //this.resetForm();
     }
    }
 
    resetForm(){
+    this.createForm();
+
     Object.keys(this.saveCameraForm.controls).forEach(key => {
       this.saveCameraForm.controls[key].setErrors(null)
     });
